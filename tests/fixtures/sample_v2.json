@@ -1,0 +1,28 @@
+{
+  "code": 0,
+  "msg": "ok",
+  "data": [
+    {
+      "id": "developer_1",
+      "originId": "1",
+      "type": "developer",
+      "directory": ["开发指南", "平台简介"],
+      "pathnames": ["document", "client-docs"],
+      "url": "https://open.feishu.cn/document/client-docs/intro",
+      "originalPath": "document/client-docs",
+      "value": "欢迎使用开放平台（已更新）。",
+      "updateTime": 1700000002000
+    },
+    {
+      "id": "developer_3",
+      "originId": "3",
+      "type": "developer",
+      "directory": ["服务端 API", "消息", "消息管理"],
+      "pathnames": ["document", "server-docs", "im-v1", "message", "create"],
+      "url": "https://open.feishu.cn/document/server-docs/im-v1/message/create",
+      "value": "发送消息 API。",
+      "updateTime": 1700000003000
+    }
+  ]
+}
+

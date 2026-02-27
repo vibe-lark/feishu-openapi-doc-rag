@@ -1,0 +1,19 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Local indexes / caches
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Large source JSON + generated artifacts
+larkopenapidoc.json
+openapi_doc_tree.txt
+dist/
+
+# Local sandbox outputs
+/tmp/

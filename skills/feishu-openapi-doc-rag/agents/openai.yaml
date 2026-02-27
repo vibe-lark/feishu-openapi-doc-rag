@@ -1,0 +1,3 @@
+interface:
+  display_name: "Feishu OpenAPI Doc RAG"
+  short_description: "Offline search/extract Feishu OpenAPI docs (grep/show/deps/diff)"
