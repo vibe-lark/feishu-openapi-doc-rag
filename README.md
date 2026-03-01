@@ -25,3 +25,22 @@ python3 scripts/bootstrap_index_from_cdn.py
 PYTHONPATH=vendor python3 -m openapi_doc_cli grep "发送语音" --limit 10
 ```
 
+## Release Notes
+
+### Version history
+
+- `0.1.1` (2026-03-02): bump `openapi_doc_cli` version and align vendored skill version; add strict version assertion in CLI smoke test.
+- `0.1.0` (2026-02-27): initial release of offline-first Feishu OpenAPI doc RAG CLI + standalone skill bundle.
+
+### Latest package download
+
+- Latest release package: [feishu-openapi-doc-rag.zip](https://magic-builder.tos-cn-beijing.volces.com/uploads/1772382386892_feishu-openapi-doc-rag.zip)
+
+### Install via AI
+
+Tell your AI assistant to install the skill from the URL above, for example:
+
+```text
+Please install this Codex skill from:
+https://magic-builder.tos-cn-beijing.volces.com/uploads/1772382386892_feishu-openapi-doc-rag.zip
+```
