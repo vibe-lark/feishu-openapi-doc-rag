@@ -2,6 +2,8 @@ import subprocess
 import sys
 import unittest
 
+EXPECTED_VERSION = "0.1.1"
+
 
 class TestCliSmoke(unittest.TestCase):
     def test_help_exits_zero(self) -> None:
@@ -26,7 +28,7 @@ class TestCliSmoke(unittest.TestCase):
             env={**dict(**__import__("os").environ), "PYTHONPATH": "src"},
         )
         self.assertEqual(proc.returncode, 0)
-        self.assertRegex(proc.stdout.strip(), r"^\d+\.\d+\.\d+$")
+        self.assertEqual(proc.stdout.strip(), EXPECTED_VERSION)
 
     def test_base_dir_can_appear_after_subcommand(self) -> None:
         proc = subprocess.run(
