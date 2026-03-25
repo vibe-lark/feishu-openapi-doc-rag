@@ -1,6 +1,6 @@
 ---
 name: feishu-openapi-doc-rag
-description: "Use when you need offline-first retrieval and extraction of Feishu Open Platform OpenAPI documentation from a periodically updated JSON index (CDN) and a local SQLite index, including: API lookup from natural-language queries, core request block extraction, dependency doc chaining, and daily diffing for updates."
+description: "Use when you need offline-first retrieval and extraction of Feishu Open Platform OpenAPI docs from a periodically updated JSON (CDN) into a local SQLite index, including API lookup from natural-language queries, core request block extraction, dependency chaining, and daily diffing."
 ---
 
 # Feishu Openapi Doc Rag

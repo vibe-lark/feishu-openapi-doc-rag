@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
 from typing import List
 
 
@@ -74,27 +73,15 @@ def smart_tokens(query: str) -> List[str]:
     if not q:
         return []
 
-    rough = [t for t in re.split(r"[\\s\\t\\r\\n\\-_/,:;，。！？()（）]+", q) if t]
+    rough = [t for t in re.split(r"[\s\t\r\n\-_/,:;，。！？()（）]+", q) if t]
     tokens: List[str] = []
     for t in rough:
-        # If the token is a concatenated Chinese phrase (no delimiters), extract
-        # known domain phrases first (e.g. "多维表格写入" -> "多维表格" + "写入").
         if any(_is_cjk(ch) for ch in t):
-            for phrase in sorted(_DOMAIN_PHRASES, key=len, reverse=True):
-                if phrase in t and phrase not in _CJK_STOPWORDS:
-                    tokens.append(phrase)
+            tokens.extend(_tokenize_cjk_run(t))
+            continue
 
-        # split on common CJK connectors inside the token
-        parts = re.split(r"[的与和及在对把将]+", t)
-        for p in parts:
-            p = p.strip()
-            if not p:
-                continue
-            if p in _CJK_STOPWORDS:
-                continue
-            # Drop single-char CJK tokens (too noisy)
-            if len(p) == 1 and _is_cjk(p):
-                continue
+        p = t.strip()
+        if p:
             tokens.append(p)
 
     # de-dupe preserve order
@@ -106,3 +93,50 @@ def smart_tokens(query: str) -> List[str]:
         seen.add(t)
         out.append(t)
     return out
+
+
+def _tokenize_cjk_run(token: str) -> List[str]:
+    out: List[str] = []
+    i = 0
+    buf = ""
+    phrases = sorted(_DOMAIN_PHRASES, key=len, reverse=True)
+    connectors = set("的与和及在对把将")
+
+    def flush_buffer() -> None:
+        nonlocal buf
+        buf = buf.strip()
+        if not buf or buf in _CJK_STOPWORDS:
+            buf = ""
+            return
+        for piece in _split_cjk_piece(buf):
+            if piece not in _CJK_STOPWORDS:
+                out.append(piece)
+        buf = ""
+
+    while i < len(token):
+        ch = token[i]
+        if ch in connectors:
+            flush_buffer()
+            i += 1
+            continue
+
+        phrase = next((p for p in phrases if token.startswith(p, i)), None)
+        if phrase is not None:
+            flush_buffer()
+            out.append(phrase)
+            i += len(phrase)
+            continue
+
+        buf += ch
+        i += 1
+
+    flush_buffer()
+    return [p for p in out if not (len(p) == 1 and _is_cjk(p))]
+
+
+def _split_cjk_piece(piece: str) -> List[str]:
+    if not piece:
+        return []
+    if all(_is_cjk(ch) for ch in piece) and len(piece) >= 4 and len(piece) % 2 == 0:
+        return [piece[i : i + 2] for i in range(0, len(piece), 2)]
+    return [piece]

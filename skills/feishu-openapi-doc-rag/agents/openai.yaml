@@ -1,3 +1,7 @@
 interface:
   display_name: "Feishu OpenAPI Doc RAG"
   short_description: "Offline search/extract Feishu OpenAPI docs (grep/show/deps/diff)"
+  default_prompt: "Use $feishu-openapi-doc-rag to search Feishu OpenAPI docs and extract the core request blocks for the relevant API."
+
+policy:
+  allow_implicit_invocation: true

@@ -108,7 +108,10 @@ def cmd_cat(*, index_path: Path, selector: str) -> int:
 
 
 def cmd_grep(*, index_path: Path, pattern: str, limit: int) -> int:
-    for h in grep_docs(index_path=index_path, pattern=pattern, limit=limit):
+    hits = grep_docs(index_path=index_path, pattern=pattern, limit=limit)
+    if not hits:
+        print(f'0 results found for "{pattern}". Please try shorter keywords or English API paths.')
+        return 0
+    for h in hits:
         print(f"{h.directory_path}\n  {h.url}\n  id={h.id}\n")
     return 0
-
